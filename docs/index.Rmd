@@ -25,6 +25,6 @@ Learning Objectives: • Develop Experimental Designs for Soilborne Diseases •
 ## How did we make this?
 
 This site is hosted on GitHub and was created using RMarkdown.
-The files used to create the site are available at the [APS_IntroR_2020 site](https://github.com/knausb/soilborne_disease_analysis).
+The files used to create the site are available at the [Soilborn Disease Analysis GitHub site](https://github.com/knausb/soilborne_disease_analysis).
 
 
