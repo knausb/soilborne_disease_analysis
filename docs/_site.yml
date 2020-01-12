@@ -1,0 +1,20 @@
+name: "soilborne_disease_analysis"
+output_dir: "."
+output:
+  html_document:
+    theme: paper
+    highlight: textmate
+    include:
+      before_body: header.html
+      after_body: footer.html
+    css: styles.css
+navbar:
+  title: "Soilborne Disease Analysis"
+  left:
+    - text: "The Linear Model"
+      href: lm.html
+    - text: "Experimental Design"
+      href: exp_design.html
+    - text: "Excercises"
+      href: exercises.html
+

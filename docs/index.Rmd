@@ -1,0 +1,30 @@
+---
+title: "About Soilborne Disease Data Collection and Analysis"
+---
+
+## Course goals
+
+
+
+## Prerequisits
+
+This workshop requires no previous experience with R.
+It is expected that you have installed R and RStudio on your computer prior to the workshop.
+
+Instructions on how to [download and install R](https://cran.r-project.org/) at CRAN.
+
+Instructions on how to [download and install RStudio](https://rstudio.com/products/rstudio/download/).
+Select the free RStudio Desktop version.
+
+
+## Learning Objectives:
+
+Learning Objectives: • Develop Experimental Designs for Soilborne Diseases • Evaluate Benefits and Shortcomings of Sampling Strategies • Data Analysis for Experimental Designs and Sampling Strategies Discussed
+
+
+## How did we make this?
+
+This site is hosted on GitHub and was created using RMarkdown.
+The files used to create the site are available at the [APS_IntroR_2020 site](https://github.com/knausb/soilborne_disease_analysis).
+
+
