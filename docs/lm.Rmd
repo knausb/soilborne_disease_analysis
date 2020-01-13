@@ -2,8 +2,59 @@
 title: "The Linear Model"
 ---
 
-## This page is present
 
-Lorem ipsum
+The linear model is the foundation of statistical hypothesis testing.
+Many of the analyses we encounter in the technical literature can be seen as extensions of the linear model.
+Understanding experimental design requires an understanding of what test we plan to perform.
+A foundation in the linear model will help us understand the design and implementation of our experiments.
+
+
+## A line
+
+
+In grade school geometry we learned the equation of a line.
+
+$$
+y = mx + b
+$$
+
+
+Here, `x` and `y` are coordinates on the plane.
+The slope is `m`.
+And the y-intercept is `b`.
+We can plot this in R as follows.
+
+
+```{r, fig.align='center'}
+x <- 1:20
+y <- 0.5 * x + 1
+plot(x, y)
+```
+
+
+The first line generates some data and assigns it to the variable `x`.
+The secons line uses a contrived slope (0.5) and intercept (1) to generate values which we assign to the variable `y`.
+Because the values of `y` **depend** on `x` we sometimes call `y` the **dependent** variable and `x` the **independent** variable.
+The line crosses the y-intercept at one and for each increase of value in `x` we see a half increase in `y`.
+
+
+In biology we rarely see such clear patterns.
+In order to accomodate this variation we add an error term.
+
+$$
+y = mx + b + \epsilon_{Norm}
+$$
+
+
+This can be plotted in R as follows.
+
+
+```{r, fig.align='center'}
+set.seed(9)
+y <- 0.5 * x + 2 + rnorm(n=length(x), mean = 0, sd = 1)
+plot(x, y)
+```
+
+
 
 

@@ -306,9 +306,28 @@ Lindsey Thiessen and Brian J. Knaus
 </div>
 
 
-<div id="this-page-is-present" class="section level2">
-<h2>This page is present</h2>
-<p>Lorem ipsum</p>
+<p>The linear model is the foundation of statistical hypothesis testing. Many of the analyses we encounter in the technical literature can be seen as extensions of the linear model. Understanding experimental design requires an understanding of what test we plan to perform. A foundation in the linear model will help us understand the design and implementation of our experiments.</p>
+<div id="a-line" class="section level2">
+<h2>A line</h2>
+<p>In grade school geometry we learned the equation of a line.</p>
+<p><span class="math display">\[
+y = mx + b
+\]</span></p>
+<p>Here, <code>x</code> and <code>y</code> are coordinates on the plane. The slope is <code>m</code>. And the y-intercept is <code>b</code>. We can plot this in R as follows.</p>
+<pre class="r"><code>x &lt;- 1:20
+y &lt;- 0.5 * x + 1
+plot(x, y)</code></pre>
+<p><img src="lm_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The first line generates some data and assigns it to the variable <code>x</code>. The secons line uses a contrived slope (0.5) and intercept (1) to generate values which we assign to the variable <code>y</code>. Because the values of <code>y</code> <strong>depend</strong> on <code>x</code> we sometimes call <code>y</code> the <strong>dependent</strong> variable and <code>x</code> the <strong>independent</strong> variable. The line crosses the y-intercept at one and for each increase of value in <code>x</code> we see a half increase in <code>y</code>.</p>
+<p>In biology we rarely see such clear patterns. In order to accomodate this variation we add an error term.</p>
+<p><span class="math display">\[
+y = mx + b + \epsilon_{Norm}
+\]</span></p>
+<p>This can be plotted in R as follows.</p>
+<pre class="r"><code>set.seed(9)
+y &lt;- 0.5 * x + 2 + rnorm(n=length(x), mean = 0, sd = 1)
+plot(x, y)</code></pre>
+<p><img src="lm_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 
 <center>
