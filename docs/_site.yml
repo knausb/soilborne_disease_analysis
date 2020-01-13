@@ -11,10 +11,14 @@ output:
 navbar:
   title: "Soilborne Disease Analysis"
   left:
+    - text: "Background"
+      href: background.html
     - text: "The Linear Model"
       href: lm.html
     - text: "Experimental Design"
       href: exp_design.html
+    - text: "Sampling Strategy"
+      href: sampling_strategy.html
     - text: "Excercises"
       href: exercises.html
 

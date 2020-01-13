@@ -273,10 +273,16 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="background.html">Background</a>
+</li>
+<li>
   <a href="lm.html">The Linear Model</a>
 </li>
 <li>
   <a href="exp_design.html">Experimental Design</a>
+</li>
+<li>
+  <a href="sampling_strategy.html">Sampling Strategy</a>
 </li>
 <li>
   <a href="exercises.html">Excercises</a>
@@ -318,7 +324,7 @@ y = mx + b
 y &lt;- 0.5 * x + 1
 plot(x, y)</code></pre>
 <p><img src="lm_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The first line generates some data and assigns it to the variable <code>x</code>. The secons line uses a contrived slope (0.5) and intercept (1) to generate values which we assign to the variable <code>y</code>. Because the values of <code>y</code> <strong>depend</strong> on <code>x</code> we sometimes call <code>y</code> the <strong>dependent</strong> variable and <code>x</code> the <strong>independent</strong> variable. The line crosses the y-intercept at one and for each increase of value in <code>x</code> we see a half increase in <code>y</code>.</p>
+<p>The first line generates some data and assigns it to the variable <code>x</code>. The secons line uses a contrived slope (0.5) and intercept (1) to generate values which we assign to the variable <code>y</code>. Because the values of <code>y</code> <strong>depend</strong> on <code>x</code> we sometimes call <code>y</code> the <strong>dependent</strong> variable and <code>x</code> the <strong>independent</strong> variable. Similarly, we may refer to <code>y</code> as the <strong>response</strong> and <code>x</code> as <strong>predictor(s)</strong>. The line crosses the y-intercept at one and for each increase of value in <code>x</code> we see a half increase in <code>y</code>.</p>
 <p>In biology we rarely see such clear patterns. In order to accomodate this variation we add an error term.</p>
 <p><span class="math display">\[
 y = mx + b + \epsilon_{Norm}
