@@ -9,7 +9,7 @@ Understanding experimental design requires an understanding of what test we plan
 A foundation in the linear model will help us understand the design and implementation of our experiments.
 
 
-## A line
+## The linear equation
 
 
 In grade school geometry we learned the equation of a line.
@@ -37,6 +37,9 @@ The secons line uses a contrived slope (0.5) and intercept (1) to generate value
 Because the values of `y` **depend** on `x` we sometimes call `y` the **dependent** variable and `x` the **independent** variable.
 Similarly, we may refer to `y` as the **response** and `x` as **predictor(s)**.
 The line crosses the y-intercept at one and for each increase of value in `x` we see a half increase in `y`.
+
+
+## Adding the error term
 
 
 In biology we rarely see such clear patterns.
