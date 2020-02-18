@@ -25,15 +25,15 @@ And the y-intercept is `b`.
 We can plot this in R as follows.
 
 
-```{r, fig.align='center'}
+```{r, fig.align='center', fig.cap='Figure 1. A straight line.'}
 x <- 1:20
-y <- 0.5 * x + 1
+y <- 0.5 * x + 2
 plot(x, y)
 ```
 
 
 The first line generates some data and assigns it to the variable `x`.
-The secons line uses a contrived slope (0.5) and intercept (1) to generate values which we assign to the variable `y`.
+The second line uses a contrived slope (0.5) and intercept (2) to generate values which we assign to the variable `y`.
 Because the values of `y` **depend** on `x` we sometimes call `y` the **dependent** variable and `x` the **independent** variable.
 Similarly, we may refer to `y` as the **response** and `x` as **predictor(s)**.
 The line crosses the y-intercept at one and for each increase of value in `x` we see a half increase in `y`.
@@ -53,12 +53,38 @@ $$
 This can be plotted in R as follows.
 
 
-```{r, fig.align='center'}
+```{r, fig.align='center', fig.cap='Figure 2. A straight line with random error.'}
 set.seed(9)
 y <- 0.5 * x + 2 + rnorm(n=length(x), mean = 0, sd = 1)
 plot(x, y)
 ```
 
+
+This is the exact same plot as in Figure 1 except that the data are now distributed around the line with normally distributed error.
+The mean of this distribution was zero because we do not want it to deviate from the line.
+The standard deviation, or the dispersal around the line, was arbitrarily set to one.
+In your experiments the standard deviation will represent biological variation combined with technical error assotiated with measuring the data.
+
+### Linear regression
+
+When we use linear regression we are attempting to infer the slope and intercept that we've specified above.
+We can use the function `lm()` to perform the regression and it's `summary()` method to report the results.
+
+
+```{r}
+lm1 <- lm(y ~ x)
+summary(lm1)
+```
+
+
+We see that the intercept is ```r lm1$coefficients[1]```, which should be close to two, and the slope is ```r lm1$coefficients[2]```, which should be close to 0.5.
+
+
+## Analysis of variance
+
+
+In the analysis of soilborne pathogens we are typically looking for differences among groups.
+In linear regression we were looking for relationships among a (putatively) dependent variable and independent variables.
 
 
 

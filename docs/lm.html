@@ -321,10 +321,15 @@ y = mx + b
 \]</span></p>
 <p>Here, <code>x</code> and <code>y</code> are coordinates on the plane. The slope is <code>m</code>. And the y-intercept is <code>b</code>. We can plot this in R as follows.</p>
 <pre class="r"><code>x &lt;- 1:20
-y &lt;- 0.5 * x + 1
+y &lt;- 0.5 * x + 2
 plot(x, y)</code></pre>
-<p><img src="lm_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The first line generates some data and assigns it to the variable <code>x</code>. The secons line uses a contrived slope (0.5) and intercept (1) to generate values which we assign to the variable <code>y</code>. Because the values of <code>y</code> <strong>depend</strong> on <code>x</code> we sometimes call <code>y</code> the <strong>dependent</strong> variable and <code>x</code> the <strong>independent</strong> variable. Similarly, we may refer to <code>y</code> as the <strong>response</strong> and <code>x</code> as <strong>predictor(s)</strong>. The line crosses the y-intercept at one and for each increase of value in <code>x</code> we see a half increase in <code>y</code>.</p>
+<div class="figure" style="text-align: center">
+<img src="lm_files/figure-html/unnamed-chunk-1-1.png" alt="Figure 1. A straight line." width="672" />
+<p class="caption">
+Figure 1. A straight line.
+</p>
+</div>
+<p>The first line generates some data and assigns it to the variable <code>x</code>. The second line uses a contrived slope (0.5) and intercept (2) to generate values which we assign to the variable <code>y</code>. Because the values of <code>y</code> <strong>depend</strong> on <code>x</code> we sometimes call <code>y</code> the <strong>dependent</strong> variable and <code>x</code> the <strong>independent</strong> variable. Similarly, we may refer to <code>y</code> as the <strong>response</strong> and <code>x</code> as <strong>predictor(s)</strong>. The line crosses the y-intercept at one and for each increase of value in <code>x</code> we see a half increase in <code>y</code>.</p>
 </div>
 <div id="adding-the-error-term" class="section level2">
 <h2>Adding the error term</h2>
@@ -336,7 +341,42 @@ y = mx + b + \epsilon_{Norm}
 <pre class="r"><code>set.seed(9)
 y &lt;- 0.5 * x + 2 + rnorm(n=length(x), mean = 0, sd = 1)
 plot(x, y)</code></pre>
-<p><img src="lm_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center">
+<img src="lm_files/figure-html/unnamed-chunk-2-1.png" alt="Figure 2. A straight line with random error." width="672" />
+<p class="caption">
+Figure 2. A straight line with random error.
+</p>
+</div>
+<p>This is the exact same plot as in Figure 1 except that the data are now distributed around the line with normally distributed error. The mean of this distribution was zero because we do not want it to deviate from the line. The standard deviation, or the dispersal around the line, was arbitrarily set to one. In your experiments the standard deviation will represent biological variation combined with technical error assotiated with measuring the data.</p>
+<div id="linear-regression" class="section level3">
+<h3>Linear regression</h3>
+<p>When we use linear regression we are attempting to infer the slope and intercept that we’ve specified above. We can use the function <code>lm()</code> to perform the regression and it’s <code>summary()</code> method to report the results.</p>
+<pre class="r"><code>lm1 &lt;- lm(y ~ x)
+summary(lm1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4636 -0.5682 -0.1028  0.3166  1.9994 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.84546    0.46805   3.943 0.000954 ***
+## x            0.50003    0.03907  12.797 1.78e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.008 on 18 degrees of freedom
+## Multiple R-squared:  0.901,  Adjusted R-squared:  0.8955 
+## F-statistic: 163.8 on 1 and 18 DF,  p-value: 1.779e-10</code></pre>
+<p>We see that the intercept is <code>1.8454587</code>, which should be close to two, and the slope is <code>0.5000256</code>, which should be close to 0.5.</p>
+</div>
+</div>
+<div id="analysis-of-variance" class="section level2">
+<h2>Analysis of variance</h2>
+<p>In the analysis of soilborne pathogens we are typically looking for differences among groups. In linear regression</p>
 </div>
 
 <center>
