@@ -85,6 +85,28 @@ We see that the intercept is ```r lm1$coefficients[1]```, which should be close 
 
 In the analysis of soilborne pathogens we are typically looking for differences among groups.
 In linear regression we were looking for relationships among a (putatively) dependent variable and independent variables.
+When we investigate soilborne pathogens we're typically looking for differences among groups of plots.
+Fr example, we may be looking for differences among plots that were fumigated, or fertilized, or ammended in some other manner.
+These are frequently analysis of variance (ANOVA) type questions.
+ANOVA can be seen as a form of the lineaar model wherre instead of trying to infer a slope and intercept we're trying to infer the elevation, or y-intercept, for two or more groups.
+
+
+```{r}
+my_data <- cbind( rep(c('A', 'B', 'C'), each = 10), rnorm(n = 30, mean = 10, sd = 2) )
+my_data <- as.data.frame(my_data)
+colnames(my_data) <- c("Group", "Value")
+my_data$Group <- as.factor(my_data$Group)
+my_data$Value <- as.numeric(my_data$Value)
+```
+
+```{r, fig.align='center', fig.cap="Figure 3. Box and whisker plot of simulated data with normal error."}
+library(ggplot2)
+p <- ggplot(data = my_data, mapping = aes(x = Group, y = Value))
+p <- p + geom_boxplot()
+p
+```
 
 
 
+
+### Contrasts

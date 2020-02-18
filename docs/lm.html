@@ -376,7 +376,25 @@ summary(lm1)</code></pre>
 </div>
 <div id="analysis-of-variance" class="section level2">
 <h2>Analysis of variance</h2>
-<p>In the analysis of soilborne pathogens we are typically looking for differences among groups. In linear regression</p>
+<p>In the analysis of soilborne pathogens we are typically looking for differences among groups. In linear regression we were looking for relationships among a (putatively) dependent variable and independent variables. When we investigate soilborne pathogens we’re typically looking for differences among groups of plots. Fr example, we may be looking for differences among plots that were fumigated, or fertilized, or ammended in some other manner. These are frequently analysis of variance (ANOVA) type questions. ANOVA can be seen as a form of the lineaar model wherre instead of trying to infer a slope and intercept we’re trying to infer the elevation, or y-intercept, for two or more groups.</p>
+<pre class="r"><code>my_data &lt;- cbind( rep(c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;), each = 10), rnorm(n = 30, mean = 10, sd = 2) )
+my_data &lt;- as.data.frame(my_data)
+colnames(my_data) &lt;- c(&quot;Group&quot;, &quot;Value&quot;)
+my_data$Group &lt;- as.factor(my_data$Group)
+my_data$Value &lt;- as.numeric(my_data$Value)</code></pre>
+<pre class="r"><code>library(ggplot2)
+p &lt;- ggplot(data = my_data, mapping = aes(x = Group, y = Value))
+p &lt;- p + geom_boxplot()
+p</code></pre>
+<div class="figure" style="text-align: center">
+<img src="lm_files/figure-html/unnamed-chunk-5-1.png" alt="Figure 3. Box and whisker plot of simulated data with normal error." width="672" />
+<p class="caption">
+Figure 3. Box and whisker plot of simulated data with normal error.
+</p>
+</div>
+<div id="contrasts" class="section level3">
+<h3>Contrasts</h3>
+</div>
 </div>
 
 <center>
