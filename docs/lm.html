@@ -371,13 +371,14 @@ summary(lm1)</code></pre>
 ## Residual standard error: 1.008 on 18 degrees of freedom
 ## Multiple R-squared:  0.901,  Adjusted R-squared:  0.8955 
 ## F-statistic: 163.8 on 1 and 18 DF,  p-value: 1.779e-10</code></pre>
-<p>We see that the intercept is <code>1.8454587</code>, which should be close to two, and the slope is <code>0.5000256</code>, which should be close to 0.5.</p>
+<p>In order to perform the linear regression we’ve used the function <code>lm()</code> and saved it’s results in the object <code>lm1</code>. We summarized the object we created with the generic function <code>summary()</code>. We see that the intercept is <code>1.8454587</code>, which should be close to two, and the slope is <code>0.5000256</code>, which should be close to 0.5.</p>
 </div>
 </div>
 <div id="analysis-of-variance" class="section level2">
 <h2>Analysis of variance</h2>
-<p>In the analysis of soilborne pathogens we are typically looking for differences among groups. In linear regression we were looking for relationships among a (putatively) dependent variable and independent variables. When we investigate soilborne pathogens we’re typically looking for differences among groups of plots. Fr example, we may be looking for differences among plots that were fumigated, or fertilized, or ammended in some other manner. These are frequently analysis of variance (ANOVA) type questions. ANOVA can be seen as a form of the lineaar model wherre instead of trying to infer a slope and intercept we’re trying to infer the elevation, or y-intercept, for two or more groups.</p>
-<pre class="r"><code>my_data &lt;- cbind( rep(c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;), each = 10), rnorm(n = 30, mean = 10, sd = 2) )
+<p>In the analysis of soilborne pathogens we are typically looking for differences among groups. In linear regression we were looking for relationships among a (putatively) dependent variable and independent variables. When we investigate soilborne pathogens we’re typically looking for differences among groups of plots. For example, we may be looking for differences among plots that were fumigated, or fertilized, or ammended in some other manner. These are frequently analysis of variance (ANOVA) type questions. ANOVA can be seen as a form of the lineaar model where instead of trying to infer a slope and intercept we’re trying to infer the elevation, or y-intercept, for two or more groups.</p>
+<pre class="r"><code>set.seed(99)
+my_data &lt;- cbind( rep(c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;), each = 10), rnorm(n = 30, mean = 10, sd = 2) )
 my_data &lt;- as.data.frame(my_data)
 colnames(my_data) &lt;- c(&quot;Group&quot;, &quot;Value&quot;)
 my_data$Group &lt;- as.factor(my_data$Group)
@@ -385,6 +386,8 @@ my_data$Value &lt;- as.numeric(my_data$Value)</code></pre>
 <pre class="r"><code>library(ggplot2)
 p &lt;- ggplot(data = my_data, mapping = aes(x = Group, y = Value))
 p &lt;- p + geom_boxplot()
+p &lt;- p + geom_jitter(shape=16, position=position_jitter(0.2))
+p &lt;- p + theme_bw()
 p</code></pre>
 <div class="figure" style="text-align: center">
 <img src="lm_files/figure-html/unnamed-chunk-5-1.png" alt="Figure 3. Box and whisker plot of simulated data with normal error." width="672" />
@@ -392,8 +395,70 @@ p</code></pre>
 Figure 3. Box and whisker plot of simulated data with normal error.
 </p>
 </div>
+<p>Here we’ve simulated three groups of data. We’ve visualized this data using box and whisker plots. I like to add the dots as long as there aren’t too many. And I prefer <code>theme_bw()</code> over the default theme. You may want to omit these steps if you like.</p>
+<p>Note that we’ve created a <strong>factor</strong> to indicate which group each sample belongs to. Note that a <strong>factor</strong> is different from a <strong>vector of characters</strong> because a factor includes information about the groups or levels and a vector of characters does not.</p>
+<pre class="r"><code>my_data$Group</code></pre>
+<pre><code>##  [1] A A A A A A A A A A B B B B B B B B B B C C C C C C C C C C
+## Levels: A B C</code></pre>
+<pre class="r"><code>as.character(my_data$Group)</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot;
+## [20] &quot;B&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot;</code></pre>
+<p>We can now test for differences in group means.</p>
+<pre class="r"><code>options(contrasts = c(&quot;contr.helmert&quot;, &quot;contr.poly&quot;))
+lm2 &lt;- lm(Value ~ Group, data = my_data)
+summary(lm2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Value ~ Group, data = my_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -14.200  -6.225  -1.500   8.275  14.700 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   15.500      1.624   9.546 3.81e-10 ***
+## Group1         0.950      1.989   0.478    0.637    
+## Group2         1.250      1.148   1.089    0.286    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.894 on 27 degrees of freedom
+## Multiple R-squared:  0.04974,    Adjusted R-squared:  -0.02065 
+## F-statistic: 0.7067 on 2 and 27 DF,  p-value: 0.5022</code></pre>
+<pre class="r"><code># http://www.sthda.com/english/wiki/one-way-anova-test-in-r
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>group_by(my_data, Group) %&gt;%
+  summarise(
+    count = n(),
+    mean = mean(Value, na.rm = TRUE),
+    sd = sd(Value, na.rm = TRUE)
+  )</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##   Group count  mean    sd
+##   &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 A        10  13.3 10.4 
+## 2 B        10  15.2  7.87
+## 3 C        10  18    8.15</code></pre>
+<pre class="r"><code>mean(my_data$Value)</code></pre>
+<pre><code>## [1] 15.5</code></pre>
+<p>Shapiro-Wilk test of normality</p>
+<p>Levene’s test for common variance</p>
 <div id="contrasts" class="section level3">
 <h3>Contrasts</h3>
+<pre class="r"><code>options(&quot;contrasts&quot;)</code></pre>
+<pre><code>## $contrasts
+## [1] &quot;contr.helmert&quot; &quot;contr.poly&quot;</code></pre>
+<pre class="r"><code>options(contrasts = c(&quot;contr.helmert&quot;, &quot;contr.poly&quot;))
+options(contrasts = c(&quot;contr.treatment&quot;, &quot;contr.poly&quot;))</code></pre>
 </div>
 </div>
 

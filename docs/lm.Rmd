@@ -77,6 +77,8 @@ summary(lm1)
 ```
 
 
+In order to perform the linear regression we've used the function `lm()` and saved it's results in the object `lm1`.
+We summarized the object we created with the generic function `summary()`.
 We see that the intercept is ```r lm1$coefficients[1]```, which should be close to two, and the slope is ```r lm1$coefficients[2]```, which should be close to 0.5.
 
 
@@ -86,12 +88,13 @@ We see that the intercept is ```r lm1$coefficients[1]```, which should be close 
 In the analysis of soilborne pathogens we are typically looking for differences among groups.
 In linear regression we were looking for relationships among a (putatively) dependent variable and independent variables.
 When we investigate soilborne pathogens we're typically looking for differences among groups of plots.
-Fr example, we may be looking for differences among plots that were fumigated, or fertilized, or ammended in some other manner.
+For example, we may be looking for differences among plots that were fumigated, or fertilized, or ammended in some other manner.
 These are frequently analysis of variance (ANOVA) type questions.
-ANOVA can be seen as a form of the lineaar model wherre instead of trying to infer a slope and intercept we're trying to infer the elevation, or y-intercept, for two or more groups.
+ANOVA can be seen as a form of the lineaar model where instead of trying to infer a slope and intercept we're trying to infer the elevation, or y-intercept, for two or more groups.
 
 
 ```{r}
+set.seed(99)
 my_data <- cbind( rep(c('A', 'B', 'C'), each = 10), rnorm(n = 30, mean = 10, sd = 2) )
 my_data <- as.data.frame(my_data)
 colnames(my_data) <- c("Group", "Value")
@@ -99,14 +102,65 @@ my_data$Group <- as.factor(my_data$Group)
 my_data$Value <- as.numeric(my_data$Value)
 ```
 
+
 ```{r, fig.align='center', fig.cap="Figure 3. Box and whisker plot of simulated data with normal error."}
 library(ggplot2)
 p <- ggplot(data = my_data, mapping = aes(x = Group, y = Value))
 p <- p + geom_boxplot()
+p <- p + geom_jitter(shape=16, position=position_jitter(0.2))
+p <- p + theme_bw()
 p
 ```
 
+Here we've simulated three groups of data.
+We've visualized this data using box and whisker plots.
+I like to add the dots as long as there aren't too many.
+And I prefer `theme_bw()` over the default theme.
+You may want to omit these steps if you like.
+
+Note that we've created a **factor** to indicate which group each sample belongs to.
+Note that a **factor** is different from a **vector of characters** because a factor includes information about the groups or levels and a vector of characters does not.
 
 
+```{r}
+my_data$Group
+as.character(my_data$Group)
+```
+
+
+We can now test for differences in group means.
+
+```{r}
+options(contrasts = c("contr.helmert", "contr.poly"))
+lm2 <- lm(Value ~ Group, data = my_data)
+summary(lm2)
+```
+
+
+```{r}
+# http://www.sthda.com/english/wiki/one-way-anova-test-in-r
+library(dplyr)
+group_by(my_data, Group) %>%
+  summarise(
+    count = n(),
+    mean = mean(Value, na.rm = TRUE),
+    sd = sd(Value, na.rm = TRUE)
+  )
+mean(my_data$Value)
+```
+
+
+Shapiro-Wilk test of normality
+
+Levene's test for common variance
 
 ### Contrasts
+
+```{r}
+options("contrasts")
+
+options(contrasts = c("contr.helmert", "contr.poly"))
+options(contrasts = c("contr.treatment", "contr.poly"))
+```
+
+
